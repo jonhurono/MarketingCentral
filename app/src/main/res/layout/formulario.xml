@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".Formulario">
 
+    <Button
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tb_form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnQuery"
+        android:text="BUSCAR" />
+
     <TableLayout
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,6 +33,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:id="@+id/RUT_Cli"
                 android:hint="rut" />
         </TableRow>
@@ -97,13 +107,13 @@
             android:layout_marginTop="7dp"
             android:layout_marginBottom="7dp"
             android:gravity="center">
+
             <Switch
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¿Recibir ofertas por WhatsApp?"
                 android:textColor="@color/black" />
-
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -112,7 +122,8 @@
         </TableRow>
 
         <TableRow
-            android:visibility="invisible">
+            android:visibility="invisible"
+            android:id="@+id/row_wsp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -141,7 +152,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:layout_marginRight="50dp"
+            android:layout_marginEnd="50dp"
             android:id="@+id/btnCreate"
             android:text="AGREGAR" />
         <Button
@@ -167,7 +178,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:layout_marginRight="50dp"
+            android:layout_marginEnd="50dp"
             android:id="@+id/btnUpdate"
             android:text="EDITAR" />
         <Button

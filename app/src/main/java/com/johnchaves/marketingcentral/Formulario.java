@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TableRow;
@@ -18,13 +20,13 @@ import java.sql.Statement;
 public class Formulario extends Activity {
 
     EditText Rut_Cli, Nom_Cli, Ape_Pat, Ape_Mat, Email, Oferta, Nro_Wsp;
-    Button btnCreate, btnClear, btnUpdate, btnDelete;
+    Button btnCreate, btnClear, btnUpdate, btnDelete, btnQuery;
     Switch recibeOferta;
-    TableRow botonera1, botonera2;
+    TableRow row_wsp, botonera1, botonera2;
 
     @Override
-    protected void onCreate (Bundle savedInstace){
-        super.onCreate(savedInstace);
+    protected void onCreate (Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.formulario);
 
         Rut_Cli = (EditText) findViewById(R.id.RUT_Cli);
@@ -38,11 +40,69 @@ public class Formulario extends Activity {
         recibeOferta = (Switch) findViewById(R.id.switch1);
         botonera1    = (TableRow) findViewById(R.id.row1);
         botonera2    = (TableRow) findViewById(R.id.row2);
+        row_wsp      = (TableRow) findViewById(R.id.row_wsp);
 
+        btnQuery    = (Button) findViewById(R.id.btnQuery);
         btnCreate   = (Button) findViewById(R.id.btnCreate);
         btnClear    = (Button) findViewById(R.id.btnClear);
         btnUpdate   = (Button) findViewById(R.id.btnUpdate);
         btnDelete   = (Button) findViewById(R.id.btnDelete);
+
+        recibeOferta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    row_wsp.setVisibility(View.VISIBLE);
+                    Oferta.setText("1");
+                } else{
+                    row_wsp.setVisibility(View.INVISIBLE);
+                    Oferta.setText("0");
+                }
+            }
+        });
+
+        btnQuery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                readCliente();
+            }
+        });
+
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createCliente();
+            }
+        });
+
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                limpiar();
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateCliente();
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteCliente();
+            }
+        });
+    }
+    private void limpiar(){
+        Rut_Cli.setText(null);
+        Nom_Cli.setText(null);
+        Ape_Pat.setText(null);
+        Ape_Mat.setText(null);
+        Email.setText(null);
+        Nro_Wsp.setText(null);
     }
 
     public Connection conexionDB(){
@@ -84,52 +144,55 @@ public class Formulario extends Activity {
 
     private void createCliente() {
         try{
-            Statement stm = conexionDB().createStatement();
-            ResultSet rs = stm.executeQuery("EXEC Sp_iudc_ClientesMarketing @Modo = 'I'," +
-                    "@RUT_Cli = '"+Rut_Cli.getText().toString()+"' ");
+            Statement pst = conexionDB().createStatement();
+            int rs = pst.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'I'," +
+                    "@RUT_Cli = '"+Rut_Cli.getText().toString()+"'," +
+                    "@Nom_Cli = '"+Nom_Cli.getText().toString()+"'," +
+                    "@Ape_Pat_Cli = '"+Ape_Pat.getText().toString()+"'," +
+                    "@Ape_Mat_Cli = '"+Ape_Mat.getText().toString()+"'," +
+                    "@Email = '"+Email.getText().toString()+"'," +
+                    "@Oferta_Wsp = '"+Oferta.getText().toString()+"'," +
+                    "@Nro_Wsp = '"+Nro_Wsp.getText().toString()+"' ");
 
-            if(rs.next()){
-                Toast.makeText(getApplicationContext(),"CLIENTE CREADO",Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Toast.makeText(getApplicationContext(),"ERROR AL GUARDAR CLIENTE",Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(getApplicationContext(),"CLIENTE CREADO CORRECTAMENTE",Toast.LENGTH_SHORT).show();
+
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"ERROR EN INSERCIÓN: REVISAR LOS DATOS - "+e.getMessage(),Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
     private void updateCliente() {
         try{
-            Statement stm = conexionDB().createStatement();
-            ResultSet rs = stm.executeQuery("EXEC Sp_iudc_ClientesMarketing @Modo = 'U'," +
-                    "@RUT_Cli = '"+Rut_Cli.getText().toString()+"' ");
+            Statement upd = conexionDB().createStatement();
+            int rs = upd.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'U'," +
+                    "@RUT_Cli = '"+Rut_Cli.getText().toString()+"'," +
+                    "@Nom_Cli = '"+Nom_Cli.getText().toString()+"'," +
+                    "@Ape_Pat_Cli = '"+Ape_Pat.getText().toString()+"'," +
+                    "@Ape_Mat_Cli = '"+Ape_Mat.getText().toString()+"'," +
+                    "@Email = '"+Email.getText().toString()+"'," +
+                    "@Oferta_Wsp = '"+Oferta.getText().toString()+"'," +
+                    "@Nro_Wsp = '"+Nro_Wsp.getText().toString()+"' ");
 
-            if(rs.next()){
-                Toast.makeText(getApplicationContext(),"CLIENTE ACTUALIZADO",Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Toast.makeText(getApplicationContext(),"ERROR AL ACTUALIZAR",Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(getApplicationContext(),"CLIENTE ACTUALIZADO CORRECTAMENTE",Toast.LENGTH_SHORT).show();
+
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"ERROR EN ACTUALIZAR: REVISAR LOS DATOS - "+e.getMessage(),Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
     private void deleteCliente() {
         try{
-            Statement stm = conexionDB().createStatement();
-            ResultSet rs = stm.executeQuery("EXEC Sp_iudc_ClientesMarketing @Modo = 'D'," +
+            Statement drp = conexionDB().createStatement();
+            int rs = drp.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'D'," +
                     "@RUT_Cli = '"+Rut_Cli.getText().toString()+"' ");
 
-            if(rs.next()){
-                Toast.makeText(getApplicationContext(),"CLIENTE ELIMINADO",Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Toast.makeText(getApplicationContext(),"ERROR EN ELIMINACIÓN",Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(getApplicationContext(),"CLIENTE ELIMINADO CORRECTAMENTE",Toast.LENGTH_SHORT).show();
+
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"ERROR EN ELIMINAR, INTENTAR NUEVAMENTE - "+e.getMessage(),Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 }
