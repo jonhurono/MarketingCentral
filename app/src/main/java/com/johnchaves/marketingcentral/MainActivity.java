@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
 
             String driver = Util.getProperty("db.driver",getApplicationContext());
-            String url = Util.getProperty("db.fullurl",getApplicationContext());
+            String url = Util.getProperty("db.url",getApplicationContext());
 
             Class.forName(""+driver+"").newInstance();
 
