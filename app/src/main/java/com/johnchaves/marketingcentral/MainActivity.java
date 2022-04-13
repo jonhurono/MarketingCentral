@@ -2,13 +2,11 @@ package com.johnchaves.marketingcentral;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        user = (EditText) findViewById(R.id.txtUser);
-        password = (EditText) findViewById(R.id.txtPassword);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        user = findViewById(R.id.txtUser);
+        password = findViewById(R.id.txtPassword);
+        btnLogin = findViewById(R.id.btnLogin);
 
         password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -83,9 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 password.setText(null);
             }
         }catch (Exception e){
-            //startActivity(new Intent(MainActivity.this, Formulario.class));
-            //finish();
-            //Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 

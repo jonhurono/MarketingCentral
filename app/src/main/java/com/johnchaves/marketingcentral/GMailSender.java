@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.PasswordAuthentication;
+import javax.mail.PasswordAuthentication;
 import java.security.AccessController;
 import java.security.Provider;
 import java.security.Security;
@@ -26,12 +26,12 @@ import javax.mail.internet.MimeMessage;
 import javax.sql.DataSource;
 
 public class GMailSender extends javax.mail.Authenticator {
-    private String mailhost = "smtp.gmail.com";
-    private String user;
-    private String password;
-    private Session session;
+    private final String mailhost = "smtp.gmail.com";
+    private final String user;
+    private final String password;
+    private final Session session;
 
-    static {
+    {
         Security.addProvider(new JSSEProvider());
     }
 
@@ -60,7 +60,7 @@ public class GMailSender extends javax.mail.Authenticator {
     public synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
         try{
             MimeMessage message = new MimeMessage(session);
-            DataHandler handler = new DataHandler((javax.activation.DataSource) new ByteArrayDataSource(body.getBytes(), "text/plain"));
+            DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
             message.setSender(new InternetAddress(sender));
             message.setSubject(subject);
             message.setDataHandler(handler);
@@ -74,91 +74,7 @@ public class GMailSender extends javax.mail.Authenticator {
         }
     }
 
-    public class ByteArrayDataSource implements DataSource {
-        private byte[] data;
-        private String type;
-
-        public ByteArrayDataSource(byte[] data, String type) {
-            super();
-            this.data = data;
-            this.type = type;
-        }
-
-        public ByteArrayDataSource(byte[] data) {
-            super();
-            this.data = data;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getContentType() {
-            if (type == null)
-                return "application/octet-stream";
-            else
-                return type;
-        }
-
-        public InputStream getInputStream() throws IOException {
-            return new ByteArrayInputStream(data);
-        }
-
-        public String getName() {
-            return "ByteArrayDataSource";
-        }
-
-        public OutputStream getOutputStream() throws IOException {
-            throw new IOException("Not Supported");
-        }
-
-        @Override
-        public Connection getConnection() throws SQLException {
-            return null;
-        }
-
-        @Override
-        public Connection getConnection(String s, String s1) throws SQLException {
-            return null;
-        }
-
-        @Override
-        public <T> T unwrap(Class<T> aClass) throws SQLException {
-            return null;
-        }
-
-        @Override
-        public boolean isWrapperFor(Class<?> aClass) throws SQLException {
-            return false;
-        }
-
-        @Override
-        public PrintWriter getLogWriter() throws SQLException {
-            return null;
-        }
-
-        @Override
-        public void setLogWriter(PrintWriter printWriter) throws SQLException {
-
-        }
-
-        @Override
-        public void setLoginTimeout(int i) throws SQLException {
-
-        }
-
-        @Override
-        public int getLoginTimeout() throws SQLException {
-            return 0;
-        }
-
-        @Override
-        public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-            return null;
-        }
-    }
-
-    private static class JSSEProvider extends Provider {
+    public final class JSSEProvider extends Provider {
 
         public JSSEProvider() {
             super("HarmonyJSSE", 1.0, "Harmony JSSE Provider");

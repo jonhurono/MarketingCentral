@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -20,7 +21,7 @@ import java.sql.Statement;
 public class Formulario extends Activity {
 
     EditText Rut_Cli, Nom_Cli, Ape_Pat, Ape_Mat, Email, Oferta, Nro_Wsp;
-    Button btnCreate, btnClear, btnUpdate, btnDelete, btnQuery;
+    Button btnCreate, btnClear, btnUpdate, btnDelete, btnQuery, btnQR;
     Switch recibeOferta;
     TableRow row_wsp, botonera1, botonera2;
 
@@ -42,6 +43,7 @@ public class Formulario extends Activity {
         botonera2    = (TableRow) findViewById(R.id.row2);
         row_wsp      = (TableRow) findViewById(R.id.row_wsp);
 
+        btnQR       = (Button) findViewById(R.id.btnQR);
         btnQuery    = (Button) findViewById(R.id.btnQuery);
         btnCreate   = (Button) findViewById(R.id.btnCreate);
         btnClear    = (Button) findViewById(R.id.btnClear);
@@ -58,6 +60,13 @@ public class Formulario extends Activity {
                     row_wsp.setVisibility(View.INVISIBLE);
                     Oferta.setText("0");
                 }
+            }
+        });
+
+        btnQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Formulario.this, CameraQR.class));
             }
         });
 
@@ -78,7 +87,7 @@ public class Formulario extends Activity {
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                limpiar();
+                sendMail();
             }
         });
 
@@ -154,6 +163,8 @@ public class Formulario extends Activity {
                     "@Oferta_Wsp = '"+Oferta.getText().toString()+"'," +
                     "@Nro_Wsp = '"+Nro_Wsp.getText().toString()+"' ");
 
+            sendMail();
+
             Toast.makeText(getApplicationContext(),"CLIENTE CREADO CORRECTAMENTE",Toast.LENGTH_SHORT).show();
 
         }catch (Exception e){
@@ -193,6 +204,31 @@ public class Formulario extends Activity {
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"ERROR EN ELIMINAR, INTENTAR NUEVAMENTE - "+e.getMessage(),Toast.LENGTH_LONG).show();
             //Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void sendMail(){
+        try {
+            GMailSender sender = new GMailSender("jchaves@avansis.cl",
+                    "Jchaves99");
+            sender.sendMail("Bienvenido a las promociones de Central de Carnes", "" +
+                            "¡Hola "+Nom_Cli.getText()+"!,\n" +
+                            "Supermercado Central de Carnes te da una cordial bienvenida.\n \n" +
+                            "Este correo ha sido generado y enviado automáticamente, " +
+                            "para confirmar que has sido registrado en la lista de clientes " +
+                            "que desean recibir ofertas, promociones y descuentos.\n" +
+                            "No olvides seguirnos en nuestras redes sociales, y así " +
+                            "poder disfrutar de mayores beneficios.\n\n" +
+                            "Se despide,\n" +
+                            "Equipo de Marketing\n" +
+                            "Central de Carnes.\n\n" +
+                            "PD: No es necesario que respondas a este correo.",
+                    "jchaves@avansis.cl", ""+Email.getText()+"");
+            Toast.makeText(getApplicationContext(),"CORREO ENVIADO",Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),"ERROR - "+e.getMessage(),Toast.LENGTH_LONG).show();
+            //Log.e("SendMail", , e);
         }
     }
 }
