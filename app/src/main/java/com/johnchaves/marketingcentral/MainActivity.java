@@ -12,15 +12,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText user, password;
-    Button btnLogin;
+    Button btnLogin, btnTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         user = findViewById(R.id.txtUser);
         password = findViewById(R.id.txtPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnTest = findViewById(R.id.btnTest);
 
         password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -48,17 +54,40 @@ public class MainActivity extends AppCompatActivity {
                 login();
             }
         });
+
+        /*btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                test();
+            }
+        });*/
     }
 
+    /*public void test(){
+        try {
+            String url = Util.getProperty("db.fullurl",getApplicationContext());
+
+            user.setText(url);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
     public Connection conexionDB(){
+
         Connection conexion=null;
+
         try{
             StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-            //conexion= DriverManager.getConnection("@string/url_db");
-            conexion= DriverManager.getConnection("@string/url_db");
+            String driver = Util.getProperty("db.driver",getApplicationContext());
+            String url = Util.getProperty("db.fullurl",getApplicationContext());
+
+            Class.forName(""+driver+"").newInstance();
+
+            conexion = DriverManager.getConnection(""+url+"");
 
         }catch(Exception e){
             Toast.makeText(getApplicationContext(),"SIN CONEXIÓN A BASE DE DATOS",Toast.LENGTH_SHORT).show();
