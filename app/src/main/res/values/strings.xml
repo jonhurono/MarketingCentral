@@ -4,9 +4,5 @@
     <string name="toggle_flash">Toggle Flash</string>
     <string name="action_settings">Settings</string>
     <string name="scanned_data">Scanned Data</string>
-    <string name="url">//192.168.0.11</string>
-    <string name="database">Terra</string>
-    <string name="user">Movil</string>
-    <string name="password">Mv2021</string>
-    <string name="url_db">jdbc:jtds:sqlserver://192.168.0.11;databaseName=Terra;user=Movil;password=Mv2021;</string>
+
 </resources>

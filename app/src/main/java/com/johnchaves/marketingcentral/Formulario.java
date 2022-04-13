@@ -115,13 +115,20 @@ public class Formulario extends Activity {
     }
 
     public Connection conexionDB(){
-        Connection conexion=null;
+
+        Connection conexion = null;
+
         try{
             StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-            conexion= DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.11;databaseName=Terra;user=Movil;password=Mv2021;");
+            String driver = Util.getProperty("db.driver",getApplicationContext());
+            String url = Util.getProperty("db.url",getApplicationContext());
+
+            Class.forName(""+driver+"").newInstance();
+
+            conexion = DriverManager.getConnection(""+url+"");
+
         }catch(Exception e){
             Toast.makeText(getApplicationContext(),"SIN CONEXIÓN A BASE DE DATOS",Toast.LENGTH_SHORT).show();
         }
