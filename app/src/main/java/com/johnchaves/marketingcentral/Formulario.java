@@ -87,7 +87,7 @@ public class Formulario extends Activity {
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendMail();
+                limpiar();
             }
         });
 

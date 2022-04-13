@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">MarketingCentral</string>
-<<<<<<< HEAD
-=======
+
     <string name="toggle_flash">Toggle Flash</string>
     <string name="action_settings">Settings</string>
     <string name="scanned_data">Scanned Data</string>
->>>>>>> 460345636778d9b837943f9f9ccef7690d234123
 </resources>

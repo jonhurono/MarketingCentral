@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-<<<<<<< HEAD
-    package="com.johnchaves.marketingcentral">
 
-=======
-
-    package="com.johnchaves.marketingcentral">
+    package="com.johnchaves.marketingcentral" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -17,18 +13,14 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
->>>>>>> 460345636778d9b837943f9f9ccef7690d234123
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-<<<<<<< HEAD
-        android:theme="@style/Theme.MarketingCentral" />
-=======
 
-        android:theme="@style/Theme.MarketingCentral" >
+        android:theme="@style/Theme.MarketingCentral">
 
         <activity
             android:name=".MainActivity"
@@ -48,6 +40,5 @@
             android:theme="@style/Theme.MarketingCentral"
             />
     </application>
->>>>>>> 460345636778d9b837943f9f9ccef7690d234123
 
 </manifest>
