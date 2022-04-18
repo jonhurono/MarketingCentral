@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnQR"
+        android:inputType="textWebEmailAddress"
         android:text="QR" />
 
     <Button
@@ -85,19 +86,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/Ape_Mat_Cli"
                 android:hint="apellido materno" />
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="País"
-                android:textColor="@color/black" />
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/Cod_Pais"
-                android:hint="pais" />
         </TableRow>
 
         <TableRow>

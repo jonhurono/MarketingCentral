@@ -5,22 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,28 +24,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        user = findViewById(R.id.txtUser);
-        password = findViewById(R.id.txtPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnTest = findViewById(R.id.btnTest);
+        user        = findViewById(R.id.txtUser);
+        password    = findViewById(R.id.txtPassword);
+        btnLogin    = findViewById(R.id.btnLogin);
+        btnTest     = findViewById(R.id.btnTest);
 
-        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == password.getImeActionId()) {
-                    login();
-                    handled = true;
-                }
-                return handled;
-            }
-        });
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        password.setOnEditorActionListener((v, actionId, event) -> {
+            boolean handled = false;
+            if (actionId == password.getImeActionId()) {
                 login();
+                handled = true;
             }
+            return handled;
         });
+        btnLogin.setOnClickListener(view -> login());
 
         /*btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,5 +99,4 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
-
 }

@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TableRow;
@@ -30,80 +28,47 @@ public class Formulario extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.formulario);
 
-        Rut_Cli = (EditText) findViewById(R.id.RUT_Cli);
-        Nom_Cli = (EditText) findViewById(R.id.Nom_Cli);
-        Ape_Pat = (EditText) findViewById(R.id.Ape_Pat_Cli);
-        Ape_Mat = (EditText) findViewById(R.id.Ape_Mat_Cli);
-        Email   = (EditText) findViewById(R.id.Email);
-        Oferta  = (EditText) findViewById(R.id.Oferta_Wsp);
-        Nro_Wsp = (EditText) findViewById(R.id.Nro_Wsp);
+        Rut_Cli = findViewById(R.id.RUT_Cli);
+        Nom_Cli = findViewById(R.id.Nom_Cli);
+        Ape_Pat = findViewById(R.id.Ape_Pat_Cli);
+        Ape_Mat = findViewById(R.id.Ape_Mat_Cli);
+        Email   = findViewById(R.id.Email);
+        Oferta  = findViewById(R.id.Oferta_Wsp);
+        Nro_Wsp = findViewById(R.id.Nro_Wsp);
 
-        recibeOferta = (Switch) findViewById(R.id.switch1);
-        botonera1    = (TableRow) findViewById(R.id.row1);
-        botonera2    = (TableRow) findViewById(R.id.row2);
-        row_wsp      = (TableRow) findViewById(R.id.row_wsp);
+        recibeOferta = findViewById(R.id.switch1);
+        botonera1    = findViewById(R.id.row1);
+        botonera2    = findViewById(R.id.row2);
+        row_wsp      = findViewById(R.id.row_wsp);
 
-        btnQR       = (Button) findViewById(R.id.btnQR);
-        btnQuery    = (Button) findViewById(R.id.btnQuery);
-        btnCreate   = (Button) findViewById(R.id.btnCreate);
-        btnClear    = (Button) findViewById(R.id.btnClear);
-        btnUpdate   = (Button) findViewById(R.id.btnUpdate);
-        btnDelete   = (Button) findViewById(R.id.btnDelete);
+        btnQR       = findViewById(R.id.btnQR);
+        btnQuery    = findViewById(R.id.btnQuery);
+        btnCreate   = findViewById(R.id.btnCreate);
+        btnClear    = findViewById(R.id.btnClear);
+        btnUpdate   = findViewById(R.id.btnUpdate);
+        btnDelete   = findViewById(R.id.btnDelete);
 
-        recibeOferta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    row_wsp.setVisibility(View.VISIBLE);
-                    Oferta.setText("1");
-                } else{
-                    row_wsp.setVisibility(View.INVISIBLE);
-                    Oferta.setText("0");
-                }
+        recibeOferta.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b){
+                row_wsp.setVisibility(View.VISIBLE);
+                Oferta.setText("1");
+            } else{
+                row_wsp.setVisibility(View.INVISIBLE);
+                Oferta.setText("0");
             }
         });
 
-        btnQR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Formulario.this, CameraQR.class));
-            }
-        });
+        btnQR.setOnClickListener(view -> startActivity(new Intent(Formulario.this, CameraQR.class)));
 
-        btnQuery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                readCliente();
-            }
-        });
+        btnQuery.setOnClickListener(view -> readCliente());
 
-        btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createCliente();
-            }
-        });
+        btnCreate.setOnClickListener(view -> createCliente());
 
-        btnClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                limpiar();
-            }
-        });
+        btnClear.setOnClickListener(view -> limpiar());
 
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateCliente();
-            }
-        });
+        btnUpdate.setOnClickListener(view -> updateCliente());
 
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteCliente();
-            }
-        });
+        btnDelete.setOnClickListener(view -> deleteCliente());
     }
     private void limpiar(){
         Rut_Cli.setText(null);
@@ -147,8 +112,8 @@ public class Formulario extends Activity {
                 Nom_Cli.setText(rs.getString(2));
                 Ape_Pat.setText(rs.getString(3));
                 Ape_Mat.setText(rs.getString(4));
-                Email.setText(rs.getString(6));
-                Nro_Wsp.setText(rs.getString(8));
+                Email.setText(rs.getString(5));
+                Nro_Wsp.setText(rs.getString(7));
             }
             else{
                 Toast.makeText(getApplicationContext(),"CLIENTE NO ENCONTRADO",Toast.LENGTH_SHORT).show();
@@ -161,14 +126,14 @@ public class Formulario extends Activity {
     private void createCliente() {
         try{
             Statement pst = conexionDB().createStatement();
-            int rs = pst.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'I'," +
-                    "@RUT_Cli = '"+Rut_Cli.getText().toString()+"'," +
-                    "@Nom_Cli = '"+Nom_Cli.getText().toString()+"'," +
-                    "@Ape_Pat_Cli = '"+Ape_Pat.getText().toString()+"'," +
-                    "@Ape_Mat_Cli = '"+Ape_Mat.getText().toString()+"'," +
-                    "@Email = '"+Email.getText().toString()+"'," +
-                    "@Oferta_Wsp = '"+Oferta.getText().toString()+"'," +
-                    "@Nro_Wsp = '"+Nro_Wsp.getText().toString()+"' ");
+            pst.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'I'," +
+                    "@RUT_Cli = '" + Rut_Cli.getText().toString() + "'," +
+                    "@Nom_Cli = '" + Nom_Cli.getText().toString() + "'," +
+                    "@Ape_Pat_Cli = '" + Ape_Pat.getText().toString() + "'," +
+                    "@Ape_Mat_Cli = '" + Ape_Mat.getText().toString() + "'," +
+                    "@Email = '" + Email.getText().toString() + "'," +
+                    "@Oferta_Wsp = '" + Oferta.getText().toString() + "'," +
+                    "@Nro_Wsp = '" + Nro_Wsp.getText().toString() + "' ");
 
             sendMail();
 
@@ -183,14 +148,14 @@ public class Formulario extends Activity {
     private void updateCliente() {
         try{
             Statement upd = conexionDB().createStatement();
-            int rs = upd.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'U'," +
-                    "@RUT_Cli = '"+Rut_Cli.getText().toString()+"'," +
-                    "@Nom_Cli = '"+Nom_Cli.getText().toString()+"'," +
-                    "@Ape_Pat_Cli = '"+Ape_Pat.getText().toString()+"'," +
-                    "@Ape_Mat_Cli = '"+Ape_Mat.getText().toString()+"'," +
-                    "@Email = '"+Email.getText().toString()+"'," +
-                    "@Oferta_Wsp = '"+Oferta.getText().toString()+"'," +
-                    "@Nro_Wsp = '"+Nro_Wsp.getText().toString()+"' ");
+            upd.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'U'," +
+                    "@RUT_Cli = '" + Rut_Cli.getText().toString() + "'," +
+                    "@Nom_Cli = '" + Nom_Cli.getText().toString() + "'," +
+                    "@Ape_Pat_Cli = '" + Ape_Pat.getText().toString() + "'," +
+                    "@Ape_Mat_Cli = '" + Ape_Mat.getText().toString() + "'," +
+                    "@Email = '" + Email.getText().toString() + "'," +
+                    "@Oferta_Wsp = '" + Oferta.getText().toString() + "'," +
+                    "@Nro_Wsp = '" + Nro_Wsp.getText().toString() + "' ");
 
             Toast.makeText(getApplicationContext(),"CLIENTE ACTUALIZADO CORRECTAMENTE",Toast.LENGTH_SHORT).show();
 
@@ -203,8 +168,8 @@ public class Formulario extends Activity {
     private void deleteCliente() {
         try{
             Statement drp = conexionDB().createStatement();
-            int rs = drp.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'D'," +
-                    "@RUT_Cli = '"+Rut_Cli.getText().toString()+"' ");
+            drp.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'D'," +
+                    "@RUT_Cli = '" + Rut_Cli.getText().toString() + "' ");
 
             Toast.makeText(getApplicationContext(),"CLIENTE ELIMINADO CORRECTAMENTE",Toast.LENGTH_SHORT).show();
 
@@ -216,12 +181,12 @@ public class Formulario extends Activity {
 
     private void sendMail(){
         try {
-            GMailSender sender = new GMailSender("jchaves@avansis.cl",
-                    "Jchaves99");
+            GMailSender sender = new GMailSender("notificaciones@centraldecarnes.cl",
+                    "password-here");
             sender.sendMail("Bienvenido a las promociones de Central de Carnes", "" +
                             "¡Hola "+Nom_Cli.getText()+"!,\n" +
                             "Supermercado Central de Carnes te da una cordial bienvenida.\n \n" +
-                            "Este correo ha sido generado y enviado automáticamente, " +
+                            "Este correo fue generado y enviado automáticamente, " +
                             "para confirmar que has sido registrado en la lista de clientes " +
                             "que desean recibir ofertas, promociones y descuentos.\n" +
                             "No olvides seguirnos en nuestras redes sociales, y así " +
@@ -230,12 +195,13 @@ public class Formulario extends Activity {
                             "Equipo de Marketing\n" +
                             "Central de Carnes.\n\n" +
                             "PD: No es necesario que respondas a este correo.",
-                    "jchaves@avansis.cl", ""+Email.getText()+"");
+                    "notificaciones@centraldecarnes.cl", ""+Email.getText()+"");
             Toast.makeText(getApplicationContext(),"CORREO ENVIADO",Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(),"ERROR - "+e.getMessage(),Toast.LENGTH_LONG).show();
             //Log.e("SendMail", , e);
+            //$$n0t1f..Cc
         }
     }
 }
