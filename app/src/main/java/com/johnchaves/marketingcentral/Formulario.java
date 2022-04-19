@@ -141,7 +141,6 @@ public class Formulario extends Activity {
 
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"ERROR EN INSERCIÓN: REVISAR LOS DATOS - "+e.getMessage(),Toast.LENGTH_LONG).show();
-            //Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -161,7 +160,6 @@ public class Formulario extends Activity {
 
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"ERROR EN ACTUALIZAR: REVISAR LOS DATOS - "+e.getMessage(),Toast.LENGTH_LONG).show();
-            //Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -175,7 +173,6 @@ public class Formulario extends Activity {
 
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"ERROR EN ELIMINAR, INTENTAR NUEVAMENTE - "+e.getMessage(),Toast.LENGTH_LONG).show();
-            //Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -183,7 +180,6 @@ public class Formulario extends Activity {
         try {
             String email = Util.getProperty("e.address",getApplicationContext());
             String pass = Util.getProperty("e.pass",getApplicationContext());
-
 
             GMailSender sender = new GMailSender(""+email+"",
                     ""+pass+"");
@@ -204,7 +200,6 @@ public class Formulario extends Activity {
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(),"ERROR - "+e.getMessage(),Toast.LENGTH_LONG).show();
-            //Log.e("SendMail", , e);
         }
     }
 }
