@@ -4,5 +4,7 @@
     <string name="toggle_flash">Toggle Flash</string>
     <string name="action_settings">Settings</string>
     <string name="scanned_data">Scanned Data</string>
+    <string name="restart">REINICIAR</string>
+    <string name="update_downloaded">ACTUALIZACIÓN DESCARGADA</string>
 
 </resources>

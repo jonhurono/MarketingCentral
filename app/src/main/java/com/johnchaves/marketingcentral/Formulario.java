@@ -181,8 +181,12 @@ public class Formulario extends Activity {
 
     private void sendMail(){
         try {
-            GMailSender sender = new GMailSender("notificaciones@centraldecarnes.cl",
-                    "password-here");
+            String email = Util.getProperty("e.address",getApplicationContext());
+            String pass = Util.getProperty("e.pass",getApplicationContext());
+
+
+            GMailSender sender = new GMailSender(""+email+"",
+                    ""+pass+"");
             sender.sendMail("Bienvenido a las promociones de Central de Carnes", "" +
                             "¡Hola "+Nom_Cli.getText()+"!,\n" +
                             "Supermercado Central de Carnes te da una cordial bienvenida.\n \n" +
@@ -195,13 +199,12 @@ public class Formulario extends Activity {
                             "Equipo de Marketing\n" +
                             "Central de Carnes.\n\n" +
                             "PD: No es necesario que respondas a este correo.",
-                    "notificaciones@centraldecarnes.cl", ""+Email.getText()+"");
+                    ""+email+"", ""+Email.getText()+"");
             Toast.makeText(getApplicationContext(),"CORREO ENVIADO",Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(),"ERROR - "+e.getMessage(),Toast.LENGTH_LONG).show();
             //Log.e("SendMail", , e);
-            //$$n0t1f..Cc
         }
     }
 }
