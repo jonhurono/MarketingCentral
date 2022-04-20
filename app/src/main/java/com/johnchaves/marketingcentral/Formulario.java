@@ -19,7 +19,7 @@ import java.sql.Statement;
 public class Formulario extends Activity {
 
     EditText Rut_Cli, Nom_Cli, Ape_Pat, Ape_Mat, Email, Oferta, Nro_Wsp;
-    Button btnCreate, btnClear, btnUpdate, btnDelete, btnQuery, btnQR;
+    Button btnCreate, btnClear, btnUpdate, btnDelete, btnQuery, btnQR, btnBack, btnModify;
     Switch recibeOferta;
     TableRow row_wsp, botonera1, botonera2;
 
@@ -42,9 +42,11 @@ public class Formulario extends Activity {
         row_wsp      = findViewById(R.id.row_wsp);
 
         btnQR       = findViewById(R.id.btnQR);
+        btnBack     = findViewById(R.id.btnBack);
         btnQuery    = findViewById(R.id.btnQuery);
         btnCreate   = findViewById(R.id.btnCreate);
         btnClear    = findViewById(R.id.btnClear);
+        btnModify   = findViewById(R.id.btnModify);
         btnUpdate   = findViewById(R.id.btnUpdate);
         btnDelete   = findViewById(R.id.btnDelete);
 
@@ -69,14 +71,36 @@ public class Formulario extends Activity {
         btnUpdate.setOnClickListener(view -> updateCliente());
 
         btnDelete.setOnClickListener(view -> deleteCliente());
+
+        btnModify.setOnClickListener(view -> modifyCliente());
+
+        btnBack.setOnClickListener(view -> {
+            limpiar();
+            btnBack.setVisibility(View.GONE);
+            btnQuery.setVisibility(View.VISIBLE);
+            botonera2.setVisibility(View.INVISIBLE);
+            botonera1.setVisibility(View.VISIBLE);
+        });
     }
     private void limpiar(){
         Rut_Cli.setText(null);
+        Rut_Cli.setEnabled(true);
         Nom_Cli.setText(null);
+        Nom_Cli.setEnabled(true);
         Ape_Pat.setText(null);
+        Ape_Pat.setEnabled(true);
         Ape_Mat.setText(null);
+        Ape_Mat.setEnabled(true);
         Email.setText(null);
+        Email.setEnabled(true);
         Nro_Wsp.setText(null);
+        Nro_Wsp.setEnabled(true);
+
+        Rut_Cli.requestFocus();
+        btnBack.setVisibility(View.GONE);
+        btnQuery.setVisibility(View.VISIBLE);
+        botonera2.setVisibility(View.GONE);
+        botonera1.setVisibility(View.VISIBLE);
     }
 
     public Connection conexionDB(){
@@ -109,11 +133,22 @@ public class Formulario extends Activity {
             if(rs.next()){
                 Toast.makeText(getApplicationContext(),"CLIENTE ENCONTRADO",Toast.LENGTH_SHORT).show();
                 Rut_Cli.setText(rs.getString(1));
+                Rut_Cli.setEnabled(false);
                 Nom_Cli.setText(rs.getString(2));
+                Nom_Cli.setEnabled(false);
                 Ape_Pat.setText(rs.getString(3));
+                Ape_Pat.setEnabled(false);
                 Ape_Mat.setText(rs.getString(4));
+                Ape_Mat.setEnabled(false);
                 Email.setText(rs.getString(5));
+                Email.setEnabled(false);
                 Nro_Wsp.setText(rs.getString(7));
+                Nro_Wsp.setEnabled(false);
+
+                btnQuery.setVisibility(View.GONE);
+                btnBack.setVisibility(View.VISIBLE);
+                botonera1.setVisibility(View.GONE);
+                botonera2.setVisibility(View.VISIBLE);
             }
             else{
                 Toast.makeText(getApplicationContext(),"CLIENTE NO ENCONTRADO",Toast.LENGTH_SHORT).show();
@@ -135,13 +170,25 @@ public class Formulario extends Activity {
                     "@Oferta_Wsp = '" + Oferta.getText().toString() + "'," +
                     "@Nro_Wsp = '" + Nro_Wsp.getText().toString() + "' ");
 
-            sendMail();
-
+            sendMailCreado();
+            limpiar();
             Toast.makeText(getApplicationContext(),"CLIENTE CREADO CORRECTAMENTE",Toast.LENGTH_SHORT).show();
 
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"ERROR EN INSERCIÓN: REVISAR LOS DATOS - "+e.getMessage(),Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void modifyCliente(){
+        Rut_Cli.setEnabled(true);
+        Nom_Cli.setEnabled(true);
+        Ape_Pat.setEnabled(true);
+        Ape_Mat.setEnabled(true);
+        Email.setEnabled(true);
+        Nro_Wsp.setEnabled(true);
+
+        btnModify.setVisibility(View.GONE);
+        btnUpdate.setVisibility(View.VISIBLE);
     }
 
     private void updateCliente() {
@@ -156,6 +203,8 @@ public class Formulario extends Activity {
                     "@Oferta_Wsp = '" + Oferta.getText().toString() + "'," +
                     "@Nro_Wsp = '" + Nro_Wsp.getText().toString() + "' ");
 
+            sendMailModificado();
+            limpiar();
             Toast.makeText(getApplicationContext(),"CLIENTE ACTUALIZADO CORRECTAMENTE",Toast.LENGTH_SHORT).show();
 
         }catch (Exception e){
@@ -169,6 +218,8 @@ public class Formulario extends Activity {
             drp.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'D'," +
                     "@RUT_Cli = '" + Rut_Cli.getText().toString() + "' ");
 
+            sendMailEliminado();
+            limpiar();
             Toast.makeText(getApplicationContext(),"CLIENTE ELIMINADO CORRECTAMENTE",Toast.LENGTH_SHORT).show();
 
         }catch (Exception e){
@@ -176,14 +227,14 @@ public class Formulario extends Activity {
         }
     }
 
-    private void sendMail(){
+    private void sendMailCreado(){
         try {
             String email = Util.getProperty("e.address",getApplicationContext());
             String pass = Util.getProperty("e.pass",getApplicationContext());
 
             GMailSender sender = new GMailSender(""+email+"",
                     ""+pass+"");
-            sender.sendMail("Bienvenido a las promociones de Central de Carnes", "" +
+            sender.sendMail("Bienvenido a las promociones de Central de Carnes",
                             "¡Hola "+Nom_Cli.getText()+"!,\n" +
                             "Supermercado Central de Carnes te da una cordial bienvenida.\n \n" +
                             "Este correo fue generado y enviado automáticamente, " +
@@ -193,7 +244,57 @@ public class Formulario extends Activity {
                             "poder disfrutar de mayores beneficios.\n\n" +
                             "Se despide,\n" +
                             "Equipo de Marketing\n" +
-                            "Central de Carnes.\n\n" +
+                            "Central de Carnes 🐑🐖🐄.\n\n" +
+                            "PD: No es necesario que respondas a este correo.",
+                    ""+email+"", ""+Email.getText()+"");
+            Toast.makeText(getApplicationContext(),"CORREO ENVIADO",Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),"ERROR - "+e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void sendMailModificado(){
+        try {
+            String email = Util.getProperty("e.address",getApplicationContext());
+            String pass = Util.getProperty("e.pass",getApplicationContext());
+
+            GMailSender sender = new GMailSender(""+email+"",
+                    ""+pass+"");
+            sender.sendMail("Modificación de información en promociones de Central de Carnes",
+                            "¡Hola "+Nom_Cli.getText()+"!,\n" +
+                            "Supermercado Central de Carnes te informa que tus datos han sido " +
+                            "actualizados correctamente.\n \n" +
+                            "No olvides seguirnos en nuestras redes sociales, y así " +
+                            "podrás estar informado de todas las novedades.\n\n" +
+                            "Se despide,\n" +
+                            "Equipo de Marketing\n" +
+                            "Central de Carnes 🐑🐖🐄.\n\n" +
+                            "PD: No es necesario que respondas a este correo.",
+                    ""+email+"", ""+Email.getText()+"");
+            Toast.makeText(getApplicationContext(),"CORREO ENVIADO",Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),"ERROR - "+e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void sendMailEliminado(){
+        try {
+            String email = Util.getProperty("e.address",getApplicationContext());
+            String pass = Util.getProperty("e.pass",getApplicationContext());
+
+            GMailSender sender = new GMailSender(""+email+"",
+                    ""+pass+"");
+            sender.sendMail("Eliminación en promociones de Central de Carnes",
+                            "¡Hola "+Nom_Cli.getText()+"!,\n" +
+                            "Supermercado Central de Carnes te informa que tu registro en las promociones ha sido eliminado.\n \n" +
+                            "Lamentamos que hayas tomado esta elección. " +
+                            "Esperamos que nos sigas en nuestras redes sociales para que estés " +
+                            "informado a todas las novedades.\n\n" +
+                            "Se despide,\n" +
+                            "Equipo de Marketing\n" +
+                            "Central de Carnes 🐑🐖🐄.\n\n" +
                             "PD: No es necesario que respondas a este correo.",
                     ""+email+"", ""+Email.getText()+"");
             Toast.makeText(getApplicationContext(),"CORREO ENVIADO",Toast.LENGTH_LONG).show();

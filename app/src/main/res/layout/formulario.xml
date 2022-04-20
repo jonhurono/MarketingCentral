@@ -8,12 +8,12 @@
 
     <Button
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnQuery"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tb_form"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnQR"
-        android:inputType="textWebEmailAddress"
+        android:inputType="textEmailAddress"
         android:text="QR" />
 
     <Button
@@ -24,6 +24,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnQuery"
         android:text="BUSCAR" />
+    <Button
+        app:layout_constraintStart_toEndOf="@id/btnQR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tb_form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnBack"
+        android:visibility="gone"
+        android:text="◀" />
 
     <TableLayout
         app:layout_constraintTop_toTopOf="parent"
@@ -166,6 +175,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/row2"
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:weightSum="2"
@@ -177,8 +187,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:layout_marginEnd="50dp"
-            android:id="@+id/btnUpdate"
+            android:id="@+id/btnModify"
             android:text="EDITAR" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginEnd="50dp"
+            android:id="@+id/btnUpdate"
+            android:visibility="gone"
+            android:text="Guardar" />
+
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"

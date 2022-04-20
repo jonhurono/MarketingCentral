@@ -41,14 +41,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkForAppUpdate();
+
         user        = findViewById(R.id.txtUser);
         password    = findViewById(R.id.txtPassword);
         btnLogin    = findViewById(R.id.btnLogin);
         btnTest     = findViewById(R.id.btnTest);
         version     = findViewById(R.id.lblversion);
-
         version.setText(BuildConfig.VERSION_NAME);
-        checkForAppUpdate();
 
         password.setOnEditorActionListener((v, actionId, event) -> {
             boolean handled = false;
@@ -68,76 +68,6 @@ public class MainActivity extends AppCompatActivity {
         });*/
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkNewAppVersionState();
-    }
-
-    @Override
-    protected void onDestroy() {
-        unregisterInstallStateUpdListener();
-        super.onDestroy();
-    }
-
-    private void checkNewAppVersionState() {
-        appUpdateManager
-                .getAppUpdateInfo()
-                .addOnSuccessListener(
-                        appUpdateInfo -> {
-                            //FLEXIBLE:
-                            // If the update is downloaded but not installed,
-                            // notify the user to complete the update.
-                            if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-                                popupSnackbarForCompleteUpdateAndUnregister();
-                            }
-
-                            //IMMEDIATE:
-                            if (appUpdateInfo.updateAvailability()
-                                    == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                                // If an in-app update is already running, resume the update.
-                                startAppUpdateImmediate(appUpdateInfo);
-                            }
-                        });
-    }
-
-    private void startAppUpdateImmediate(AppUpdateInfo appUpdateInfo) {
-        try {
-            appUpdateManager.startUpdateFlowForResult(
-                    appUpdateInfo,
-                    AppUpdateType.IMMEDIATE,
-                    // The current activity making the update request.
-                    this,
-                    // Include a request code to later monitor this update request.
-                    MainActivity.REQ_CODE_VERSION_UPDATE);
-        } catch (IntentSender.SendIntentException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, final int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-
-        switch (requestCode) {
-
-            case REQ_CODE_VERSION_UPDATE:
-                if (resultCode != RESULT_OK) { //RESULT_OK / RESULT_CANCELED / RESULT_IN_APP_UPDATE_FAILED
-                    Toast.makeText(MainActivity.this, "App download failed.", Toast.LENGTH_LONG).show();
-                    //L.d("Update flow failed! Result code: " + resultCode);
-                    // If the update is cancelled or fails,
-                    // you can request to start the update again.
-                    unregisterInstallStateUpdListener();
-                }
-                break;
-        }
-    }
-
-    private void unregisterInstallStateUpdListener() {
-        if (appUpdateManager != null && installStateUpdatedListener != null)
-            appUpdateManager.unregisterListener(installStateUpdatedListener);
-    }
-
     private void checkForAppUpdate() {
         // Creates instance of the manager.
         appUpdateManager = AppUpdateManagerFactory.create(this);
@@ -146,13 +76,13 @@ public class MainActivity extends AppCompatActivity {
         Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
         // Create a listener to track request state updates.
-        installStateUpdatedListener = installState -> {
+        /*installStateUpdatedListener = installState -> {
             // Show module progress, log state, or install the update.
             if (installState.installStatus() == InstallStatus.DOWNLOADED)
                 // After the update is downloaded, show a notification
                 // and request user confirmation to restart the app.
                 popupSnackbarForCompleteUpdateAndUnregister();
-        };
+        };*/
 
         // Checks that the platform will allow the specified type of update.
         appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
@@ -176,6 +106,86 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void startAppUpdateImmediate(AppUpdateInfo appUpdateInfo) {
+        try {
+            appUpdateManager.startUpdateFlowForResult(
+                    appUpdateInfo,
+                    AppUpdateType.IMMEDIATE,
+                    // The current activity making the update request.
+                    this,
+                    // Include a request code to later monitor this update request.
+                    MainActivity.REQ_CODE_VERSION_UPDATE);
+        } catch (IntentSender.SendIntentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, final int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == REQ_CODE_VERSION_UPDATE) {
+            if (resultCode != RESULT_OK) { //RESULT_OK / RESULT_CANCELED / RESULT_IN_APP_UPDATE_FAILED
+                Toast.makeText(MainActivity.this, "App download failed." + resultCode, Toast.LENGTH_LONG).show();
+                // If the update is cancelled or fails,
+                // you can request to start the update again.
+                unregisterInstallStateUpdListener();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //checkNewAppVersionState();
+        appUpdateManager
+                .getAppUpdateInfo()
+                .addOnSuccessListener(
+                        appUpdateInfo -> {
+                            //IMMEDIATE:
+                            if (appUpdateInfo.updateAvailability()
+                                    == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                                // If an in-app update is already running, resume the update.
+                                //startAppUpdateImmediate(appUpdateInfo);
+                                try {
+                                    appUpdateManager.startUpdateFlowForResult(
+                                            appUpdateInfo,
+                                            AppUpdateType.IMMEDIATE,
+                                            this,
+                                            MainActivity.REQ_CODE_VERSION_UPDATE);
+                                } catch (IntentSender.SendIntentException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+    }
+
+    /*private void checkNewAppVersionState() {
+        appUpdateManager
+                .getAppUpdateInfo()
+                .addOnSuccessListener(
+                        appUpdateInfo -> {
+                            //IMMEDIATE:
+                            if (appUpdateInfo.updateAvailability()
+                                    == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                                // If an in-app update is already running, resume the update.
+                                startAppUpdateImmediate(appUpdateInfo);
+
+                            }
+                        });
+    }*/
+
+    @Override
+    protected void onDestroy() {
+        unregisterInstallStateUpdListener();
+        super.onDestroy();
+    }
+
+    private void unregisterInstallStateUpdListener() {
+        if (appUpdateManager != null && installStateUpdatedListener != null)
+            appUpdateManager.unregisterListener(installStateUpdatedListener);
+    }
+
     /*private void startAppUpdateFlexible(AppUpdateInfo appUpdateInfo) {
         try {
             appUpdateManager.startUpdateFlowForResult(
@@ -191,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }*/
 
-    private void popupSnackbarForCompleteUpdateAndUnregister() {
+    /*private void popupSnackbarForCompleteUpdateAndUnregister() {
         View drawerLayout = null;
         assert false;
         Snackbar snackbar =
@@ -201,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
         snackbar.show();
 
         unregisterInstallStateUpdListener();
-    }
+    }*/
 
     /*public void test(){
         try {
