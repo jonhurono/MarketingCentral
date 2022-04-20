@@ -6,5 +6,26 @@
     <string name="scanned_data">Scanned Data</string>
     <string name="restart">REINICIAR</string>
     <string name="update_downloaded">ACTUALIZACIÓN DESCARGADA</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="ingresar">INGRESAR</string>
+    <string name="test">test</string>
+    <string name="aqui_version">aquí versión</string>
+    <string name="qr">QR</string>
+    <string name="buscar">BUSCAR</string>
+    <string name="back">◀</string>
+    <string name="rut">RUT</string>
+    <string name="nombres">Nombre(s)</string>
+    <string name="apellido_paterno">Apellido Paterno</string>
+    <string name="apellido_materno">Apellido Materno</string>
+    <string name="e_mail">E-mail</string>
+    <string name="ofertas_por_whatsapp">¿Recibir ofertas por WhatsApp?</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="agregar">AGREGAR</string>
+    <string name="cancelar">CANCELAR</string>
+    <string name="editar">EDITAR</string>
+    <string name="guardar">Guardar</string>
+    <string name="eliminar">ELIMINAR</string>
 
 </resources>

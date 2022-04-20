@@ -6,34 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Formulario">
 
-    <Button
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tb_form"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnQR"
-        android:inputType="textEmailAddress"
-        android:text="QR" />
-
-    <Button
-        app:layout_constraintStart_toEndOf="@id/btnQR"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tb_form"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnQuery"
-        android:text="BUSCAR" />
-    <Button
-        app:layout_constraintStart_toEndOf="@id/btnQR"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tb_form"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnBack"
-        android:visibility="gone"
-        android:text="◀" />
-
     <TableLayout
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,71 +15,106 @@
         android:layout_height="wrap_content"
         android:id="@+id/tb_form">
 
+        <TableRow
+            android:layout_width="0dp"
+            android:weightSum="2"
+            android:gravity="center" >
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_marginEnd="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnQR"
+                android:text="@string/qr" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnQuery"
+                android:text="@string/buscar" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnBack"
+                android:visibility="gone"
+                android:text="@string/back" />
+        </TableRow>
+
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RUT"
+                android:text="@string/rut"
                 android:textColor="@color/black" />
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:maxLength="10"
+                android:importantForAutofill="no"
                 android:id="@+id/RUT_Cli"
-                android:hint="rut" />
+                android:inputType="phone"
+                android:hint="@string/rut" />
         </TableRow>
 
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre(s)"
+                android:text="@string/nombres"
                 android:textColor="@color/black" />
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/Nom_Cli"
-                android:hint="nombre(s)" />
+                android:inputType="text"
+                android:importantForAutofill="no"
+                android:hint="@string/nombres" />
         </TableRow>
 
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apellido Paterno"
+                android:text="@string/apellido_paterno"
                 android:textColor="@color/black" />
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/Ape_Pat_Cli"
-                android:hint="apellido paterno" />
+                android:inputType="text"
+                android:importantForAutofill="no"
+                android:hint="@string/apellido_paterno" />
         </TableRow>
 
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apellido Materno"
+                android:text="@string/apellido_materno"
                 android:textColor="@color/black" />
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/Ape_Mat_Cli"
-                android:hint="apellido materno" />
+                android:inputType="text"
+                android:importantForAutofill="no"
+                android:hint="@string/apellido_materno" />
         </TableRow>
 
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="E-mail"
+                android:text="@string/e_mail"
                 android:textColor="@color/black" />
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/Email"
-                android:hint="e-mail" />
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:hint="@string/e_mail" />
         </TableRow>
 
         <TableRow
@@ -119,12 +126,14 @@
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¿Recibir ofertas por WhatsApp?"
+                android:text="@string/ofertas_por_whatsapp"
                 android:textColor="@color/black" />
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/Oferta_Wsp"
+                android:inputType="number"
+                android:importantForAutofill="no"
                 android:visibility="gone" />
         </TableRow>
 
@@ -134,13 +143,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="WhatsApp"
+                android:text="@string/whatsapp"
                 android:textColor="@color/black" />
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/Nro_Wsp"
-                android:hint="número whatsapp" />
+                android:inputType="phone"
+                android:importantForAutofill="no"
+                android:hint="@string/whatsapp" />
         </TableRow>
 
     </TableLayout>
@@ -161,14 +172,14 @@
             android:layout_weight="0.5"
             android:layout_marginEnd="50dp"
             android:id="@+id/btnCreate"
-            android:text="AGREGAR" />
+            android:text="@string/agregar" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center"
             android:id="@+id/btnClear"
-            android:text="CANCELAR" />
+            android:text="@string/cancelar" />
     </TableRow>
 
     <TableRow
@@ -188,7 +199,7 @@
             android:layout_weight="0.5"
             android:layout_marginEnd="50dp"
             android:id="@+id/btnModify"
-            android:text="EDITAR" />
+            android:text="@string/editar" />
 
         <Button
             android:layout_width="0dp"
@@ -197,7 +208,7 @@
             android:layout_marginEnd="50dp"
             android:id="@+id/btnUpdate"
             android:visibility="gone"
-            android:text="Guardar" />
+            android:text="@string/guardar" />
 
         <Button
             android:layout_width="0dp"
@@ -205,7 +216,7 @@
             android:layout_weight="0.5"
             android:gravity="center"
             android:id="@+id/btnDelete"
-            android:text="ELIMINAR" />
+            android:text="@string/eliminar" />
     </TableRow>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
