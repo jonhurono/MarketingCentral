@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +52,11 @@ public class Formulario extends Activity {
         btnUpdate   = findViewById(R.id.btnUpdate);
         btnDelete   = findViewById(R.id.btnDelete);
 
+        Rut_Cli.addTextChangedListener(watcher);
+        Nom_Cli.addTextChangedListener(watcher);
+        Ape_Pat.addTextChangedListener(watcher);
+        Email.addTextChangedListener(watcher);
+
         recibeOferta.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b){
                 row_wsp.setVisibility(View.VISIBLE);
@@ -57,6 +64,25 @@ public class Formulario extends Activity {
             } else{
                 row_wsp.setVisibility(View.INVISIBLE);
                 Oferta.setText("0");
+                Nro_Wsp.setText(null);
+                Nro_Wsp.requestFocus();
+            }
+        });
+
+        Rut_Cli.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                btnQuery.setEnabled(s.toString().trim().length() != 0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
             }
         });
 
@@ -64,7 +90,7 @@ public class Formulario extends Activity {
 
         btnQuery.setOnClickListener(view -> readCliente());
 
-        btnCreate.setOnClickListener(view -> createCliente());
+        btnCreate.setOnClickListener(view -> isValidEmailandRut());
 
         btnClear.setOnClickListener(view -> limpiar());
 
@@ -82,6 +108,59 @@ public class Formulario extends Activity {
             botonera1.setVisibility(View.VISIBLE);
         });
     }
+
+    private final TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            checkFieldForEmptyValues();
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+        }
+    };
+
+    private void checkFieldForEmptyValues() {
+
+        btnCreate.setEnabled(Rut_Cli.length() > 0 && Nom_Cli.length() > 0
+                && Ape_Pat.length() > 0 && Email.length() > 0);
+    }
+
+    private void isValidEmailandRut(){
+
+        String email = Email.getText().toString().trim();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String rut = Rut_Cli.getText().toString().trim();
+        String rutPattern = "[0-9]+-[k0-9]+";
+
+        if ( email.matches(emailPattern) && rut.matches(rutPattern) )
+        {
+            createCliente();
+        }
+        else if( email.matches(emailPattern) )
+        {
+            Toast.makeText(getApplicationContext(),"Cliente NO creado - Revisar campo RUT",Toast.LENGTH_SHORT).show();
+            Rut_Cli.setError("RUT inválido");
+        }
+        else if( rut.matches(rutPattern) )
+        {
+            Toast.makeText(getApplicationContext(),"Cliente NO creado - Revisar campo Email",Toast.LENGTH_SHORT).show();
+            Email.setError("Email inválido");
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),"Cliente NO creado - Revisar los campos",Toast.LENGTH_SHORT).show();
+            Rut_Cli.setError("RUT inválido");
+            Email.setError("Correo inválido");
+        }
+    }
+
     private void limpiar(){
         Rut_Cli.setText(null);
         Rut_Cli.setEnabled(true);
@@ -159,6 +238,7 @@ public class Formulario extends Activity {
     }
 
     private void createCliente() {
+
         try{
             Statement pst = conexionDB().createStatement();
             pst.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'I'," +

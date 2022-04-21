@@ -11,7 +11,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="100dp"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.7"
         android:layout_height="wrap_content"
         android:id="@+id/tb_form">
 
@@ -31,6 +32,7 @@
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnQuery"
+                android:enabled="false"
                 android:text="@string/buscar" />
             <Button
                 android:layout_width="wrap_content"
@@ -47,7 +49,8 @@
                 android:text="@string/rut"
                 android:textColor="@color/black" />
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:maxLength="10"
@@ -64,7 +67,8 @@
                 android:text="@string/nombres"
                 android:textColor="@color/black" />
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/Nom_Cli"
                 android:inputType="text"
@@ -79,7 +83,8 @@
                 android:text="@string/apellido_paterno"
                 android:textColor="@color/black" />
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/Ape_Pat_Cli"
                 android:inputType="text"
@@ -94,7 +99,8 @@
                 android:text="@string/apellido_materno"
                 android:textColor="@color/black" />
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/Ape_Mat_Cli"
                 android:inputType="text"
@@ -109,7 +115,8 @@
                 android:text="@string/e_mail"
                 android:textColor="@color/black" />
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/Email"
                 android:importantForAutofill="no"
@@ -145,13 +152,28 @@
                 android:layout_height="wrap_content"
                 android:text="@string/whatsapp"
                 android:textColor="@color/black" />
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/Nro_Wsp"
-                android:inputType="phone"
-                android:importantForAutofill="no"
-                android:hint="@string/whatsapp" />
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_weight="1">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="@string/_569"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/lblWsp"
+                    android:importantForAutofill="no" />
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Nro_Wsp"
+                    android:inputType="phone"
+                    android:maxLength="8"
+                    android:importantForAutofill="no"
+                    android:hint="@string/whatsapp" />
+
+            </TableRow>
         </TableRow>
 
     </TableLayout>
@@ -172,6 +194,7 @@
             android:layout_weight="0.5"
             android:layout_marginEnd="50dp"
             android:id="@+id/btnCreate"
+            android:enabled="false"
             android:text="@string/agregar" />
         <Button
             android:layout_width="0dp"
