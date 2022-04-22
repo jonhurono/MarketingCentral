@@ -9,9 +9,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.SwitchCompat;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,7 +23,7 @@ public class Formulario extends Activity {
 
     EditText Rut_Cli, Nom_Cli, Ape_Pat, Ape_Mat, Email, Oferta, Nro_Wsp;
     Button btnCreate, btnClear, btnUpdate, btnDelete, btnQuery, btnQR, btnBack, btnModify;
-    Switch recibeOferta;
+    SwitchCompat recibeOferta;
     TableRow row_wsp, botonera1, botonera2;
 
     @Override
@@ -69,7 +70,7 @@ public class Formulario extends Activity {
             }
         });
 
-        Rut_Cli.addTextChangedListener(new TextWatcher() {
+        Rut_Cli.addTextChangedListener(new TextWatcher(){
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -109,7 +110,7 @@ public class Formulario extends Activity {
         });
     }
 
-    private final TextWatcher watcher = new TextWatcher() {
+    private final TextWatcher watcher = new TextWatcher(){
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -126,7 +127,7 @@ public class Formulario extends Activity {
         }
     };
 
-    private void checkFieldForEmptyValues() {
+    private void checkFieldForEmptyValues(){
 
         btnCreate.setEnabled(Rut_Cli.length() > 0 && Nom_Cli.length() > 0
                 && Ape_Pat.length() > 0 && Email.length() > 0);
@@ -139,7 +140,7 @@ public class Formulario extends Activity {
         String rut = Rut_Cli.getText().toString().trim();
         String rutPattern = "[0-9]+-[k0-9]+";
 
-        if ( email.matches(emailPattern) && rut.matches(rutPattern) )
+        if ( email.matches(emailPattern) && rut.matches(rutPattern) &&rut.length()>8 )
         {
             createCliente();
         }
@@ -148,7 +149,7 @@ public class Formulario extends Activity {
             Toast.makeText(getApplicationContext(),"Cliente NO creado - Revisar campo RUT",Toast.LENGTH_SHORT).show();
             Rut_Cli.setError("RUT inválido");
         }
-        else if( rut.matches(rutPattern) )
+        else if( rut.matches(rutPattern) &&rut.length()>8 )
         {
             Toast.makeText(getApplicationContext(),"Cliente NO creado - Revisar campo Email",Toast.LENGTH_SHORT).show();
             Email.setError("Email inválido");
@@ -203,7 +204,7 @@ public class Formulario extends Activity {
         return conexion;
     }
 
-    private void readCliente() {
+    private void readCliente(){
         try{
             Statement stm = conexionDB().createStatement();
             ResultSet rs = stm.executeQuery("EXEC Sp_iudc_ClientesMarketing @Modo = 'C'," +
@@ -237,7 +238,7 @@ public class Formulario extends Activity {
         }
     }
 
-    private void createCliente() {
+    private void createCliente(){
 
         try{
             Statement pst = conexionDB().createStatement();
@@ -292,7 +293,7 @@ public class Formulario extends Activity {
         }
     }
 
-    private void deleteCliente() {
+    private void deleteCliente(){
         try{
             Statement drp = conexionDB().createStatement();
             drp.executeUpdate("EXEC Sp_iudc_ClientesMarketing @Modo = 'D'," +

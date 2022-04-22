@@ -7,4 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#808080</color>
+    <color name="burdeoCentral">#6C0303</color>
+    <color name="burdeoCentralDark">#c70505</color>
+    <color name="red">#FF0000</color>
+    <color name="naranjoOscuro">#D98000</color>
+    <color name="naranjoClaro">#FCAA27</color>
+    <color name="rojoFuerte">#E12A13</color>
+    <color name="naranjo">#FB8E00</color>
+    <color name="blancoInvierno">#F0EFEF</color>
 </resources>

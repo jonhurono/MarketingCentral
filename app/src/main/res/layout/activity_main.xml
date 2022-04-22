@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -12,17 +13,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintWidth_percent="0.6"
         android:layout_width="0dp">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" >
+                android:layout_weight="1">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -34,7 +35,7 @@
                     android:inputType="text"
                     android:nextFocusDown="@+id/txtPassword"
                     android:autofillHints="username"
-                    android:hint="@string/usuario" />
+                    android:hint="@string/usuario"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,13 +43,14 @@
 
         <TableRow
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true"
-                android:layout_weight="1" >
+                android:layout_weight="1">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -60,8 +62,7 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:autofillHints="password"
-                    android:imeOptions="actionSend"
-                    android:hint="@string/contrasena" />
+                    android:hint="@string/contrasena"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,24 +71,26 @@
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            >
+            android:gravity="center">
 
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:textSize="25sp"
+                android:textSize="20sp"
+                android:fontFamily="arial"
+                android:textStyle="normal"
+                android:background="@drawable/rect_rounded_button"
+                android:backgroundTint="@color/burdeoCentral"
+                android:theme="@style/ColorButton"
                 android:id="@+id/btnLogin"
-                android:text="@string/ingresar"
-            />
-
+                android:text="@string/ingresar" />
         </TableRow>
 
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            >
+            android:gravity="center">
 
             <Button
                 android:layout_width="match_parent"
@@ -95,9 +98,7 @@
                 android:textSize="25sp"
                 android:id="@+id/btnTest"
                 android:visibility="gone"
-                android:text="@string/test"
-                />
-
+                android:text="@string/test"/>
         </TableRow>
     </TableLayout>
 
@@ -107,5 +108,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/aqui_version"
-        android:id="@+id/lblversion" />
+        android:id="@+id/lblversion"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
