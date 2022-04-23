@@ -2,19 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <TableLayout
+        android:id="@+id/tablita"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="bottom"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent="0.6"
-        android:layout_width="0dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/filita"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_percent="0.6" >
 
         <TableRow
             android:layout_width="match_parent"
@@ -26,16 +29,16 @@
                 android:layout_weight="1">
 
                 <EditText
+                    android:id="@+id/txtUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtUser"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:maxLines="1"
-                    android:inputType="text"
-                    android:nextFocusDown="@+id/txtPassword"
                     android:autofillHints="username"
-                    android:hint="@string/usuario"/>
+                    android:hint="@string/usuario"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:nextFocusDown="@+id/txtPassword"
+                    android:textColor="@color/black"
+                    android:textSize="25sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,58 +52,52 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:passwordToggleEnabled="true"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:passwordToggleEnabled="true">
 
                 <EditText
+                    android:id="@+id/txtPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true"
-                    android:id="@+id/txtPassword"
-                    android:textSize="25sp"
-                    android:textColor="@color/black"
+                    android:autofillHints="password"
+                    android:hint="@string/contrasena"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:autofillHints="password"
-                    android:hint="@string/contrasena"/>
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    app:passwordToggleEnabled="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:textSize="20sp"
-                android:fontFamily="arial"
-                android:textStyle="normal"
-                android:background="@drawable/rect_rounded_button"
-                android:backgroundTint="@color/burdeoCentral"
-                android:theme="@style/ColorButton"
-                android:id="@+id/btnLogin"
-                android:text="@string/ingresar" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="25sp"
-                android:id="@+id/btnTest"
-                android:visibility="gone"
-                android:text="@string/test"/>
-        </TableRow>
     </TableLayout>
+
+    <TableRow
+        android:id="@+id/filita"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="top"
+        app:layout_constraintTop_toBottomOf="@id/tablita"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_percent="0.6">
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_login_btn"
+            android:backgroundTint="@color/burdeoCentral"
+            android:fontFamily="arial"
+            android:text="@string/ingresar"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            android:theme="@style/ColorButton" />
+    </TableRow>
 
     <TextView
         app:layout_constraintEnd_toEndOf="parent"

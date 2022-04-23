@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     EditText user, password;
     TextView version;
-    Button btnLogin, btnTest;
+    Button btnLogin;
+    Animation animMoveToTop, fadeInAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +32,18 @@ public class MainActivity extends AppCompatActivity {
         user        = findViewById(R.id.txtUser);
         password    = findViewById(R.id.txtPassword);
         btnLogin    = findViewById(R.id.btnLogin);
-        btnTest     = findViewById(R.id.btnTest);
         version     = findViewById(R.id.lblversion);
-        //btnLogin.setVisibility(View.INVISIBLE);
         version.setText(BuildConfig.VERSION_NAME);
 
-        //slideUp(btnLogin);
-        animUP();
+        //fade in
+        fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein);
+        user.startAnimation(fadeInAnimation);
+        password.startAnimation(fadeInAnimation);
+        btnLogin.startAnimation(fadeInAnimation);
+
+        //animation
+        animMoveToTop = AnimationUtils.loadAnimation(this, R.anim.slideup);
+        btnLogin.startAnimation(animMoveToTop);
 
         password.setOnEditorActionListener((v, actionId, event) -> {
             boolean handled = false;
@@ -50,23 +54,7 @@ public class MainActivity extends AppCompatActivity {
             return handled;
         });
         btnLogin.setOnClickListener(view -> login());
-    }
 
-    public void slideUp(Button btnLogin){
-        btnLogin.setVisibility(View.VISIBLE);
-        TranslateAnimation animate = new TranslateAnimation(
-                0,                 // fromXDelta
-                0,                 // toXDelta
-                -btnLogin.getHeight(),  // fromYDelta
-                0);                // toYDelta
-        animate.setDuration(500);
-        animate.setFillAfter(true);
-        btnLogin.startAnimation(animate);
-    }
-
-    public void animUP(){
-        Animation animSlideUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slideup);
-        btnLogin.startAnimation(animSlideUp);
     }
 
     public Connection conexionDB(){
