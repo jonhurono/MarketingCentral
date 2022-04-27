@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"CREDENCIALES CORRECTAS",Toast.LENGTH_SHORT).show();
                 user.setText(null);
                 password.setText(null);
-                startActivity(new Intent(MainActivity.this, Formulario.class));
+                startActivity(new Intent(MainActivity.this, Menu.class));
             }
             else{
                 Toast.makeText(getApplicationContext(),"CREDENCIALES INCORRECTAS",Toast.LENGTH_SHORT).show();

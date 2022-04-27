@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SwitchCompat;
@@ -107,6 +110,14 @@ public class Formulario extends Activity {
             btnQuery.setVisibility(View.VISIBLE);
             botonera2.setVisibility(View.INVISIBLE);
             botonera1.setVisibility(View.VISIBLE);
+        });
+        Rut_Cli.setOnEditorActionListener((v, actionId, event) -> {
+            boolean handled = false;
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                readCliente();
+                handled = true;
+            }
+            return handled;
         });
     }
 
@@ -231,6 +242,7 @@ public class Formulario extends Activity {
                 botonera2.setVisibility(View.VISIBLE);
             }
             else{
+                Nom_Cli.requestFocus(0);
                 Toast.makeText(getApplicationContext(),"CLIENTE NO ENCONTRADO",Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
