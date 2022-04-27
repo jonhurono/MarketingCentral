@@ -12,6 +12,7 @@
 
         <LinearLayout
             android:id="@+id/primerLinear"
+            android:layout_marginTop="150dp"
             android:layout_width="0dp"
             android:layout_height="175dp"
             android:orientation="horizontal"
@@ -34,6 +35,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/clientesImg"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:contentDescription="@string/clientesimg"
+                        app:srcCompat="@drawable/icon_client" />
+
                     <TextView
                         android:id="@+id/clietnesLbl"
                         android:layout_width="wrap_content"
@@ -45,15 +55,8 @@
                         android:text="@string/clientes"
                         android:textSize="24sp" />
 
-                    <ImageView
-                        android:id="@+id/clientesImg"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:contentDescription="@string/clientesimg"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        app:srcCompat="@android:drawable/ic_menu_myplaces" />
                 </RelativeLayout>
+
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -69,6 +72,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/productosImg"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:contentDescription="@string/productosimg"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/icon_grocery" />
+
                     <TextView
                         android:id="@+id/productosLbl"
                         android:layout_width="wrap_content"
@@ -80,17 +92,10 @@
                         android:text="@string/productos"
                         android:textSize="24sp" />
 
-                    <ImageView
-                        android:id="@+id/productosImg"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:contentDescription="@string/productosimg"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        app:srcCompat="@android:drawable/ic_menu_gallery" />
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
         </LinearLayout>
 
         <LinearLayout
@@ -117,6 +122,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/informesImg"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:contentDescription="@string/informesimg"
+                        app:srcCompat="@drawable/icon_report" />
+
                     <TextView
                         android:id="@+id/informesLbl"
                         android:layout_width="wrap_content"
@@ -128,15 +142,8 @@
                         android:text="@string/informes"
                         android:textSize="24sp" />
 
-                    <ImageView
-                        android:id="@+id/informesImg"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:contentDescription="@string/informesimg"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        app:srcCompat="@android:drawable/ic_menu_agenda" />
                 </RelativeLayout>
+
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -152,6 +159,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/ajustesImg"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:contentDescription="@string/ajustesimg"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/icon_settings" />
+
                     <TextView
                         android:id="@+id/ajustesLbl"
                         android:layout_width="wrap_content"
@@ -163,19 +179,12 @@
                         android:text="@string/ajustes"
                         android:textSize="24sp" />
 
-                    <ImageView
-                        android:id="@+id/ajustesImg"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:contentDescription="@string/ajustesimg"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        app:srcCompat="@android:drawable/ic_menu_manage" />
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
         </LinearLayout>
-        
-        
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>
