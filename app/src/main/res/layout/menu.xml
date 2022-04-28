@@ -42,7 +42,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
                         android:contentDescription="@string/clientesimg"
-                        app:srcCompat="@drawable/icon_client" />
+                        android:src="@drawable/icon_client" />
 
                     <TextView
                         android:id="@+id/clietnesLbl"
@@ -51,7 +51,7 @@
                         android:layout_below="@id/clientesImg"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/aclonica"
+                        android:fontFamily="@font/aclonica_regular"
                         android:text="@string/clientes"
                         android:textSize="24sp" />
 
@@ -79,7 +79,7 @@
                         android:contentDescription="@string/productosimg"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        app:srcCompat="@drawable/icon_grocery" />
+                        android:src="@drawable/icon_grocery" />
 
                     <TextView
                         android:id="@+id/productosLbl"
@@ -88,7 +88,7 @@
                         android:layout_below="@id/productosImg"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/aclonica"
+                        android:fontFamily="@font/aclonica_regular"
                         android:text="@string/productos"
                         android:textSize="24sp" />
 
@@ -129,7 +129,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
                         android:contentDescription="@string/informesimg"
-                        app:srcCompat="@drawable/icon_report" />
+                        android:src="@drawable/icon_report" />
 
                     <TextView
                         android:id="@+id/informesLbl"
@@ -138,7 +138,7 @@
                         android:layout_below="@id/informesImg"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/aclonica"
+                        android:fontFamily="@font/aclonica_regular"
                         android:text="@string/informes"
                         android:textSize="24sp" />
 
@@ -166,7 +166,7 @@
                         android:contentDescription="@string/ajustesimg"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        app:srcCompat="@drawable/icon_settings" />
+                        android:src="@drawable/icon_settings" />
 
                     <TextView
                         android:id="@+id/ajustesLbl"
@@ -175,7 +175,7 @@
                         android:layout_below="@id/ajustesImg"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/aclonica"
+                        android:fontFamily="@font/aclonica_regular"
                         android:text="@string/ajustes"
                         android:textSize="24sp" />
 

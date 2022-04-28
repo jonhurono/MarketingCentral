@@ -1,7 +1,7 @@
 package com.johnchaves.marketingcentral;
 
 import android.content.Context;
-import android.media.Image;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
+import java.util.BitSet;
 import java.util.List;
 
-public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private Context context;
     private List<String> productos;
     private List<Integer> fotos;
 
-    public AdapterRecycler(Context context, List<String> productos, List<Integer> fotos){
+    public MyAdapter(Context context, List<String> productos, List<Integer> fotos){
         this.context = context;
         this.productos = productos;
         this.fotos = fotos;
@@ -29,14 +28,14 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.grid_item, parent,false);
-        return new ViewHolder(v);
+        return new MyViewHolder(v);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.mTextView.setText(productos.get(position));
         holder.mImageView.setImageResource(fotos.get(position));
@@ -44,15 +43,15 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
 
     @Override
     public int getItemCount() {
-        return 0;
+        return productos.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         ImageView mImageView;
         TextView mTextView;
 
-        public ViewHolder (@NonNull View itemView){
+        public MyViewHolder(@NonNull View itemView){
 
             super(itemView);
 
