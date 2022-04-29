@@ -3,6 +3,7 @@ package com.johnchaves.marketingcentral;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.sax.StartElementListener;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 
@@ -36,6 +38,7 @@ public class Menu extends Activity {
 
         cv_clientes.setOnClickListener(view -> startActivity(new Intent(Menu.this, Formulario.class)));
         cv_productos.setOnClickListener(view -> startActivity(new Intent(Menu.this, Productos.class)));
-
+        cv_informes.setOnClickListener(view -> startActivity(new Intent(Menu.this, Informes.class)));
+        cv_ajustes.setOnClickListener(view -> Toast.makeText(getApplicationContext(),"Aún no implementado",Toast.LENGTH_SHORT).show());
     }
 }

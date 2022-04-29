@@ -41,6 +41,10 @@
             android:theme="@style/Theme.MarketingCentral"
             />
         <activity
+            android:name=".Informes"
+            android:theme="@style/Theme.MarketingCentral"
+            />
+        <activity
             android:name=".CameraQR"
             android:theme="@style/Theme.MarketingCentral"
             />

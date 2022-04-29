@@ -35,4 +35,15 @@
     <string name="productosimg">productosImg</string>
     <string name="informesimg">informesImg</string>
     <string name="ajustesimg">ajustesImg</string>
+    <string name="pdf">PDF</string>
+    <string name="excel">EXCEL</string>
+    <string name="generar">Generar</string>
+    <string name="seleccione_la_fecha">Seleccione la fecha</string>
+    <string name="seleccione_el_informe">Seleccione el informe</string>
+    <string name="seleccione_el_formato">Seleccione el formato</string>
+
+    <string-array name="country_arrays">
+        <item>Informe de Ventas</item>
+        <item>Informe de Productos</item>
+    </string-array>
 </resources>
